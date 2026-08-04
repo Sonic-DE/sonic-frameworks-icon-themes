@@ -23,9 +23,9 @@ private Q_SLOTS:
     {
         QStandardPaths::setTestModeEnabled(true);
 
-        // we have Breeze via it's library and it inherits hicolor
+        // we have Silver via it's library and it inherits hicolor
         KConfigGroup cg(KSharedConfig::openConfig(), "Icons");
-        cg.writeEntry("Theme", "breeze");
+        cg.writeEntry("Theme", "silver");
         cg.sync();
 
         QDir testDataDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
