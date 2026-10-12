@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.29)
+cmake_minimum_required(VERSION 3.30)
 
 set(KF_VERSION "6.30.0") # handled by release scripts
 set(KF_DEP_VERSION "6.30.0") # handled by release scripts
@@ -26,6 +26,7 @@ include(ECMDeprecationSettings)
 include(CMakeDependentOption)
 include(ECMQmlModule)
 include(ECMGenerateQDoc)
+include(ECMInstalledLibraryCheck)
 
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
@@ -42,7 +43,7 @@ ecm_setup_version(PROJECT
                   SOVERSION 6)
 
 # Dependencies
-set(REQUIRED_QT_VERSION 6.9.0)
+set(REQUIRED_QT_VERSION 6.10.0)
 find_package(Qt6Widgets ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
 find_package(Qt6Svg ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
 
