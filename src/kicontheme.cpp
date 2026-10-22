@@ -101,8 +101,8 @@ static void initThemeHelper()
     const auto config = KSharedConfig::openConfig();
 
     // enforce the theme configured by the user, with kdeglobals fallback
-    // if not set, use Breeze
-    const QString themeToUse = KConfigGroup(config, "Icons").readEntry("Theme", QStringLiteral("breeze"));
+    // if not set, use SonicDE's installed Silver theme
+    const QString themeToUse = KConfigGroup(config, "Icons").readEntry("Theme", QStringLiteral("silver"));
 
     // use Qt API to really fully override the engine, if we set KIconEngine the Key in our plugin will
     // enforce that our engine is used
@@ -128,8 +128,10 @@ void KIconTheme::initTheme()
         // it will be used as the first found engine for a suffix will be taken
         // this must be done before the QCoreApplication is constructed
         const auto paths = QCoreApplication::libraryPaths();
-        for (const auto &path : paths) {
-            if (const QString ourPath = path + QStringLiteral("/kiconthemes6"); QFile::exists(ourPath)) {
+        // addLibraryPath prepends: preserve the caller's plugin precedence so
+        // an explicitly selected prefix is not overridden by system plugins.
+        for (auto it = paths.crbegin(); it != paths.crend(); ++it) {
+            if (const QString ourPath = *it + QStringLiteral("/kiconthemes6"); QFile::exists(ourPath)) {
                 QCoreApplication::addLibraryPath(ourPath);
             }
         }
@@ -683,7 +685,7 @@ QString KIconTheme::current()
     if (theme.isEmpty() || theme == QLatin1String("hicolor")) {
         // Still no theme, try config with kdeglobals.
         KConfigGroup cg(KSharedConfig::openConfig(), "Icons");
-        theme = cg.readEntry("Theme", QStringLiteral("breeze"));
+        theme = cg.readEntry("Theme", QStringLiteral("silver"));
     }
     if (theme.isEmpty() || theme == QLatin1String("hicolor")) {
         // Still no good theme, use default.

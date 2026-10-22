@@ -30,6 +30,19 @@ endif()
 
 set_tests_properties(kiconloader_unittest PROPERTIES RUN_SERIAL TRUE)
 
+if (USE_BreezeIcons)
+  add_executable(kiconthemeinitialization_unittest kiconthemeinitialization_unittest.cpp)
+  target_link_libraries(kiconthemeinitialization_unittest PRIVATE Qt6::Test KF6::IconThemes)
+  add_test(NAME kiconthemeinitialization_default COMMAND kiconthemeinitialization_unittest)
+  add_test(NAME kiconthemeinitialization_configured COMMAND kiconthemeinitialization_unittest)
+  set_tests_properties(kiconthemeinitialization_default PROPERTIES
+    ENVIRONMENT "QT_QPA_PLATFORM=offscreen;KICONTHEMES_TEST_THEME="
+  )
+  set_tests_properties(kiconthemeinitialization_configured PROPERTIES
+    ENVIRONMENT "QT_QPA_PLATFORM=offscreen;KICONTHEMES_TEST_THEME=RegressionUserTheme"
+  )
+endif()
+
 # Benchmark, compiled, but not run automatically with ctest
 add_executable(kiconloader_benchmark kiconloader_benchmark.cpp)
 target_link_libraries(kiconloader_benchmark Qt6::Test KF6::IconThemes KF6::WidgetsAddons KF6::ConfigCore)
