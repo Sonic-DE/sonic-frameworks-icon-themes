@@ -29,6 +29,9 @@ if (TARGET Qt6::Quick)
 endif()
 
 set_tests_properties(kiconloader_unittest PROPERTIES RUN_SERIAL TRUE)
+# These share the test-mode kdeglobals icon theme and ~/.qttest/share/icons, which several rewrite
+set_tests_properties(kiconloader_resourcethemetest kicontheme_unittest kiconengine_unittest kiconengine_scaled_unittest
+                     kicondialog_unittest kpixmapsequenceloadertest PROPERTIES RESOURCE_LOCK qttest-icons)
 
 if (USE_BreezeIcons)
   add_executable(kiconthemeinitialization_unittest kiconthemeinitialization_unittest.cpp)

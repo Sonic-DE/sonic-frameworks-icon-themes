@@ -156,10 +156,10 @@ private Q_SLOTS:
         QTest::addColumn<QIcon::Mode>("mode");
         QTest::addColumn<QColor>("expectedColor");
 
-        QTest::addRow("normal") << QIcon::Normal << QColor(41, 187, 253, 255);
-        QTest::addRow("disabled") << QIcon::Disabled << QColor(147, 147, 147, 127);
-        QTest::addRow("active") << QIcon::Active << QColor(97, 216, 253, 255);
-        QTest::addRow("selected") << QIcon::Selected << QColor(41, 187, 253, 255);
+        QTest::addRow("normal") << QIcon::Normal << QColor(77, 214, 255, 255);
+        QTest::addRow("disabled") << QIcon::Disabled << QColor(173, 173, 173, 127);
+        QTest::addRow("active") << QIcon::Active << QColor(135, 232, 255, 255);
+        QTest::addRow("selected") << QIcon::Selected << QColor(77, 214, 255, 255);
     }
 
     void testMode()
@@ -172,7 +172,8 @@ private Q_SLOTS:
 
         const QImage image = icon.pixmap(32, 32, mode).toImage();
 
-        QCOMPARE(image.pixelColor(5, 5).name(), expectedColor.name());
+        // Silver's kde icon is transparent at the corner that Breeze's filled, so sample its centre.
+        QCOMPARE(image.pixelColor(16, 16).name(), expectedColor.name());
     }
 
 private:
